@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Academic website for a Ph.D. student in Maya archaeology." />
+  <title>Madeline Stone Snyder — Maya Archaeology</title>
+  <style>
+    :root{
+      --bg: #0b0f14;
+      --surface: #101826;
+      --card: #0f1622;
+      --text: #e9eef7;
+      --muted: #b9c4d6;
+      --accent: #7dd3fc;
+      --accent2: #a7f3d0;
+      --border: rgba(233,238,247,.14);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+      --max: 1080px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(1200px 700px at 15% 10%, rgba(125,211,252,.14), transparent 50%),
+        radial-gradient(1000px 600px at 90% 15%, rgba(167,243,208,.12), transparent 55%),
+        radial-gradient(900px 600px at 60% 100%, rgba(125,211,252,.08), transparent 55%),
+        var(--bg);
+      line-height: 1.55;
+    }
+
+    a{ color: var(--accent); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+
+    .skip{
+      position: absolute;
+      left: -999px;
+      top: 10px;
+      padding: 10px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      z-index: 999;
+    }
+    .skip:focus{ left: 10px; }
+
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: rgba(11,15,20,.70);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 18px 18px; }
+
+    .topbar{
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 220px;
+    }
+
+    .mark{
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background:
+        radial-gradient(12px 12px at 30% 25%, rgba(255,255,255,.35), transparent 45%),
+        linear-gradient(135deg, rgba(125,211,252,.85), rgba(167,243,208,.75));
+      box-shadow: 0 12px 30px rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.22);
+    }
+
+    .brand h1{ font-size: 15.5px; margin: 0; line-height: 1.1; letter-spacing: .2px; }
+    .brand p{ margin: 2px 0 0; font-size: 12.5px; color: var(--muted); }
+
+    nav{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .tab{
+      appearance: none;
+      border: 1px solid var(--border);
+      background: rgba(16,24,38,.55);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: transform .08s ease, background .12s ease, border-color .12s ease;
+    }
+    .tab:hover{ transform: translateY(-1px); background: rgba(16,24,38,.78); }
+    .tab[aria-current="page"]{
+      border-color: rgba(125,211,252,.55);
+      box-shadow: 0 0 0 3px rgba(125,211,252,.18);
+      background: rgba(125,211,252,.12);
+    }
+
+    main{ padding: 28px 0 44px; }
+
+    .hero{
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 860px){
+      .hero{ grid-template-columns: 1fr; }
+      .brand{ min-width: auto; }
+    }
+
+    .panel{
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(16,24,38,.55);
+      box-shadow: var(--shadow);
+    }
+
+    .panel .pad{ padding: 18px; }
+
+    .headline{ font-size: 30px; line-height: 1.18; margin: 6px 0 10px; letter-spacing: .2px; }
+    .lede{ color: var(--muted); margin: 0 0 14px; }
+
+    .chips{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .chip{
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 12.5px;
+      color: var(--muted);
+      background: rgba(15,22,34,.45);
+    }
+
+    .links{ display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .btn{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 12px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      background: rgba(15,22,34,.55);
+      color: var(--text);
+      font-size: 13px;
+      text-decoration: none;
+      transition: transform .08s ease, background .12s ease;
+      white-space: nowrap;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(15,22,34,.82); text-decoration: none; }
+
+    .btn .dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(125,211,252,.20);
+    }
+
+    .btn.secondary .dot{ background: var(--accent2); box-shadow: 0 0 0 3px rgba(167,243,208,.18); }
+
+    .cardgrid{ display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; margin-top: 18px; }
+
+    .card{
+      grid-column: span 6;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(15,22,34,.55);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    @media (max-width: 860px){
+      .card{ grid-column: span 12; }
+    }
+
+    .card .pad{ padding: 16px; }
+    .card h3{ margin: 0 0 6px; font-size: 16px; }
+    .card p{ margin: 0; color: var(--muted); }
+
+    .photo{
+      position: relative;
+      height: 210px;
+      background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,243,208,.14));
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+    }
+
+    .photo img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo .placeholder{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: rgba(233,238,247,.78);
+      padding: 10px 12px;
+      border: 1px dashed rgba(233,238,247,.30);
+      border-radius: 14px;
+      background: rgba(11,15,20,.35);
+    }
+
+    section[hidden]{ display: none !important; }
+
+    .sectionTitle{ font-size: 22px; margin: 0 0 10px; }
+    .muted{ color: var(--muted); }
+
+    .list{
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .item{
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 12px;
+      background: rgba(15,22,34,.45);
+    }
+
+    .item strong{ display: block; font-size: 14px; margin-bottom: 2px; }
+    .item .meta{ font-size: 12.5px; color: var(--muted); }
+
+    .twocol{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 860px){
+      .twocol{ grid-template-columns: 1fr; }
+    }
+
+    .kbd{
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: rgba(16,24,38,.55);
+      color: rgba(233,238,247,.9);
+    }
+
+    footer{
+      border-top: 1px solid var(--border);
+      padding: 18px 0 32px;
+      color: var(--muted);
+    }
+
+    .sr-only{
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header>
+    <div class="wrap topbar">
+      <div class="brand" aria-label="Site identity">
+        <div class="mark" aria-hidden="true"></div>
+        <div>
+          <h1>Madeline Stone Snyder</h1>
+          <p>Ph.D. Student — Maya Archaeology • University of Texas at San Antonio</p>
+        </div>
+      </div>
+
+      <nav aria-label="Primary">
+        <button class="tab" data-target="home" aria-current="page">Home</button>
+        <button class="tab" data-target="research">Research</button>
+        <button class="tab" data-target="cv">CV</button>
+        <button class="tab" data-target="presentations">Presentations</button>
+        <button class="tab" data-target="teaching">Teaching</button>
+        <button class="tab" data-target="contact">Contact</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap" tabindex="-1">
+
+    <!-- HOME -->
+    <section id="home" class="route">
+      <div class="hero">
+        <div class="panel">
+          <div class="pad">
+            <p class="muted" style="margin:0; font-size: 13px;">Maya archaeology • field methods • settlement & landscape</p>
+            <h2 class="headline">Investigating ancient Maya communities through field survey, excavation, and material analysis.</h2>
+            <p class="lede">
+              I am a Ph.D. student focusing on <em>[your specific topic]</em>, with fieldwork experience in <em>[region/site]</em>.
+              My work integrates excavation data, GIS, and artifact analysis to understand how people lived, moved, and made meaning.
+            </p>
+            <p class="lede">
+I am an anthropological archaeologist with six years of field experience investigating the ancient Maya of the lowlands of Central America. Most of my research has focused on the Belize River Valley in West-central Belize where I currently work as part of the Mopan Valley Preclassic Project, but I have past field experience in Northwest Belize as well as some laboratory experience in Historic period artifact analysis in the United States. My dissertation research centers on a close investigation of a Late Classic Maya household at the site of Las Ruinas de Arenal and explores how the household engaged in various productive activities like crafting and feasting to negotiate their status and place in social memory at the site. I received my M.A. in anthropology from the University of Texas at San Antonio (UT San Antonio) in 2025 as part of my process through the Ph.D. program at the same university. I am currently a Lecturer at UT San Antonio and have taught multiple introductory-level courses within the anthropology department. 
+            </p>
+
+            <div class="chips" aria-label="Research keywords">
+              <span class="chip">Settlement archaeology</span>
+              <span class="chip">Household archaeology</span>
+              <span class="chip">Ceramic analysis</span>
+              <span class="chip">GIS & spatial modeling</span>
+              <span class="chip">Community-engaged research</span>
+            </div>
+
+            <div class="links" aria-label="Quick links">
+              <a class="btn" href="#contact"><span class="dot" aria-hidden="true"></span>Email / Contact</a>
+              <a class="btn secondary" href="#cv"><span class="dot" aria-hidden="true"></span>Download CV (PDF)</a>
+              <a class="btn" href="#presentations"><span class="dot" aria-hidden="true"></span>Upcoming talks</a>
+            </div>
+
+            <!-- <p class="muted" style="margin: 14px 0 0; font-size: 12.5px;">
+              Tip: Replace bracketed placeholders and add images under <span class="kbd">/assets/photos/</span>.
+            </p> -->
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="photo" aria-label="Profile / field photo">
+            <!-- Replace with a real photo: /assets/photos/profile.jpg -->
+            <img src="assets/photos/Arenal cropped cover photo.png" alt="Arenal" />
+            <!-- <div class="placeholder">Add a hero image: assets/photos/profile.jpg</div> -->
+          </div>
+          <div class="pad">
+            <h3 style="margin:0 0 6px; font-size: 16px;">Current position</h3>
+            <p class="muted" style="margin:0;">
+              Ph.D. Student, Department of Anthropology, University of Texas at San Antonio<br/>
+              Advisor: Prof. [Name] • Lab/Project: [Name]
+            </p>
+            <div class="links" style="margin-top: 12px;">
+              <a class="btn" href="https://www.linkedin.com/" target="_blank" rel="noreferrer"><span class="dot" aria-hidden="true"></span>LinkedIn</a>
+              <a class="btn" href="https://www.example.edu" target="_blank" rel="noreferrer"><span class="dot" aria-hidden="true"></span>University</a>
+              <a class="btn secondary" href="https://scholar.google.com/" target="_blank" rel="noreferrer"><span class="dot" aria-hidden="true"></span>Google Scholar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cardgrid" aria-label="Highlights">
+        <article class="card">
+          <div class="photo" aria-label="Fieldwork photo 1">
+            <img src="assets/photos/IMG-20230729-WA0000(2).jpg" alt="Excavation unit at __Site Name__" />
+            <!-- <div class="placeholder">assets/photos/fieldwork-01.jpg</div> -->
+          </div>
+          <div class="pad">
+            <h3>Fieldwork</h3>
+            <p>Excavation and survey experience across multiple Maya sites, including mapping, unit excavation, and lab processing.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="photo" aria-label="Fieldwork photo 2">
+            <!-- <img src="assets/photos/fieldwork-02.jpg" alt="Screening sediments during excavation" /> -->
+            <img src="assets/photos/IMG-20250720-WA0039.jpg" alt="__DESCRIPTION__" />
+            <!-- <div class="placeholder">assets/photos/fieldwork-02.jpg</div> -->
+          </div>
+          <div class="pad">
+            <h3>Research focus</h3>
+            <p>Household economies, daily practice, and landscape use—using ceramics, lithics, and spatial analysis.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="photo" aria-label="Fieldwork photo 3">
+            <!-- <img src="assets/photos/fieldwork-03.jpg" alt="Drone survey over a forested mound group" /> -->
+            <div class="placeholder">assets/photos/fieldwork-03.jpg</div>
+          </div>
+          <div class="pad">
+            <h3>Methods</h3>
+            <p>GIS, field documentation standards, and reproducible workflows for data cleaning, archiving, and reporting.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="photo" aria-label="Lab photo">
+            <!-- <img src="assets/photos/lab-01.jpg" alt="Sorting and labeling ceramics in the lab" /> -->
+            <div class="placeholder">assets/photos/lab-01.jpg</div>
+          </div>
+          <div class="pad">
+            <h3>Public scholarship</h3>
+            <p>Commitment to ethical research, local collaboration, and public-facing writing about archaeology and heritage.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- RESEARCH -->
+    <section id="research" class="route" hidden>
+      <div class="panel"><div class="pad">
+        <h2 class="sectionTitle">Research</h2>
+        <p class="muted">
+          Use this page for 1–2 paragraph summaries, then a few “project cards.” Keep it scannable.
+        </p>
+
+        <div class="twocol" style="margin-top: 14px;">
+          <div class="item">
+            <strong>Dissertation project</strong>
+            <div class="meta">Working title: [Title] • Region: [e.g., Belize / Guatemala / Yucatán]</div>
+            <p class="muted" style="margin: 8px 0 0;">
+              Short summary (5–7 sentences). What question are you answering? What evidence? Why does it matter?
+            </p>
+          </div>
+          <div class="item">
+            <strong>Approach</strong>
+            <div class="meta">Field methods • Lab analysis • Spatial modeling</div>
+            <ul class="muted" style="margin: 8px 0 0; padding-left: 18px;">
+              <li>Survey + mapping (GPS/Total Station, photogrammetry, drone imagery)</li>
+              <li>Excavation strategy (units, sampling, stratigraphy, feature documentation)</li>
+              <li>Artifact analysis (ceramics/lithics; quantitative + qualitative)</li>
+              <li>Data management (archival standards; reproducible pipelines)</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 style="margin: 18px 0 8px; font-size: 16px;">Selected projects</h3>
+        <ul class="list">
+          <li class="item">
+            <strong>[Project / Field season name]</strong>
+            <div class="meta">Role: [e.g., Crew chief] • Site: [Name] • Years: [2023–2025]</div>
+            <p class="muted" style="margin: 6px 0 0;">1–2 sentences on your contribution and outcomes (poster? dataset? report?).</p>
+          </li>
+          <li class="item">
+            <strong>[Project / Collaboration name]</strong>
+            <div class="meta">Methods: [GIS, ceramics, remote sensing] • Region: [Name]</div>
+            <p class="muted" style="margin: 6px 0 0;">1–2 sentences. Add links to open materials if you have them.</p>
+          </li>
+        </ul>
+      </div></div>
+    </section>
+
+    <!-- CV -->
+    <section id="cv" class="route" hidden>
+      <div class="panel"><div class="pad">
+        <h2 class="sectionTitle">Curriculum Vitae</h2>
+        <p class="muted">Option A: link a PDF. Option B: embed a concise HTML CV here (recommended) and also provide a PDF download.</p>
+
+        <div class="item" style="margin-top: 12px;">
+          <strong>Download</strong>
+          <!-- <div class="meta">Place your CV at: <span class="kbd">/assets/StudentName_CV.pdf</span></div> -->
+          <p class="muted" style="margin: 8px 0 0;">
+            <a href="assets/Madeline Snyder CV Web Version.pdf">Download CV (PDF)</a>
+          </p>
+        </div>
+
+        <div class="twocol" style="margin-top: 14px;">
+          <div class="item">
+            <strong>Education</strong>
+            <ul class="muted" style="margin: 8px 0 0; padding-left: 18px;">
+              <li>Ph.D., Environmental Anthropology (<em>in progress</em>), University of Texas at San Antonio</li>
+              <li>M.A., Environmental Anthropology, University of Texas at San Antonio</li>
+              <li>B.A., Anthropology, University of Massachusetts Boston</li>
+            </ul>
+          </div>
+          <div class="item">
+            <strong>Appointments & affiliations</strong>
+            <ul class="muted" style="margin: 8px 0 0; padding-left: 18px;">
+              <li>Lecturer, Department of Anthropology, University of Texas at San Antonio, 2025 - Present</li>
+              <li>Instructor of Record, Department of Anthropology, University of Texas at San Antonio, 2023</li>
+              <li>Teaching Assistant, Department of Anthropology, University of Texas at San Antonio, 2020 - 2025</li>
+              <li>Graduate Research Assistant, [Lab/Center], [Years]</li>
+              <li>Member, [Professional organization]</li>
+              <li>Field project: [Project name]</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="twocol" style="margin-top: 14px;">
+          <div class="item">
+            <strong>Publications (selected)</strong>
+            <ul class="muted" style="margin: 8px 0 0; padding-left: 18px;">
+              <li>[Last, First]. [Year]. “Title.” <em>Journal</em> [details].</li>
+              <li>[Last, First]. [Year]. “Title.” In <em>Edited volume</em> [details].</li>
+            </ul>
+          </div>
+          <div class="item">
+            <strong>Grants & awards</strong>
+            <ul class="muted" style="margin: 8px 0 0; padding-left: 18px;">
+              <li>[Funder], [Year] — [Award name]</li>
+              <li>[Department/University], [Year] — [Fellowship]</li>
+            </ul>
+          </div>
+        </div>
+      </div></div>
+    </section>
+
+    <!-- PRESENTATIONS -->
+    <section id="presentations" class="route" hidden>
+      <div class="panel"><div class="pad">
+        <h2 class="sectionTitle">Presentations</h2>
+        <p class="muted">List upcoming first, then selected past. Add links to slides, posters, abstracts, or recordings when available.</p>
+
+        <h3 style="margin: 14px 0 8px; font-size: 16px;">Upcoming</h3>
+        <ul class="list">
+          <li class="item">
+            <strong>Construction of Memory: Household Ancestor Veneration at Las Ruinas de Arenal, Belize</strong>
+            <div class="meta"><a href="https://www.saa.org/AnnualMeeting/SAAAnnualMeeting/Annual-Meeting.aspx" target="_blank" rel="noreferrer">SAA Annual Meeting</a> • San Francisco, CA • April 30, 2026, 10:15 a.m.–12:15 p.m.</div>
+            <div class="meta">Session: Ritual Landscapes of Death • Co-author: Carolyn Freiwald</div>
+          </li>
+          <li class="item">
+            <strong>[Talk title]</strong>
+            <div class="meta">Conference/Series • City/Online • Month Day, Year</div>
+            <div class="meta">Session: [optional] • Co-authors: [optional]</div>
+          </li>
+          <li class="item">
+            <strong>[Poster title]</strong>
+            <div class="meta">Conference • Month Day, Year</div>
+          </li>
+        </ul>
+
+        <h3 style="margin: 18px 0 8px; font-size: 16px;">Selected past</h3>
+        <ul class="list">
+          <li class="item">
+            <strong>[Presentation title]</strong>
+            <div class="meta">Venue • Year • <a href="#">Slides</a> • <a href="#">Abstract</a></div>
+          </li>
+          <li class="item">
+            <strong>[Presentation title]</strong>
+            <div class="meta">Venue • Year</div>
+          </li>
+        </ul>
+      </div></div>
+    </section>
+
+    <!-- TEACHING -->
+    <section id="teaching" class="route" hidden>
+      <div class="panel"><div class="pad">
+        <h2 class="sectionTitle">Teaching</h2>
+        <p class="muted">This can be a short philosophy plus a concrete “what students do in my class” section.</p>
+
+        <div class="twocol" style="margin-top: 12px;">
+          <div class="item">
+            <strong>Teaching philosophy (short)</strong>
+            <p class="muted" style="margin: 8px 0 0;">
+              I aim to help students build confident, evidence-based arguments while understanding archaeology as
+              both a scientific practice and a humanistic inquiry. In my courses, students learn to read material
+              culture critically, practice ethical reasoning, and connect archaeological questions to contemporary
+              concerns about heritage, identity, and stewardship.
+            </p>
+            <p class="muted" style="margin: 8px 0 0;">
+              Replace this with her own voice (250–500 words is usually enough for a website).
+            </p>
+          </div>
+          <div class="item">
+            <strong>Teaching experience</strong>
+            <ul class="muted" style="margin: 8px 0 0; padding-left: 18px;">
+              <li>Instructor of record: [Course], [Term/Year]</li>
+              <li>Teaching assistant: [Course], [Term/Year]</li>
+              <li>Guest lecture: [Topic], [Course], [Year]</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 style="margin: 18px 0 8px; font-size: 16px;">Sample learning activities</h3>
+        <ul class="list">
+          <li class="item">
+            <strong>Artifact-in-hand reasoning</strong>
+            <div class="meta">Students practice description → inference → argument, and reflect on uncertainty.</div>
+          </li>
+          <li class="item">
+            <strong>Map-based interpretation</strong>
+            <div class="meta">GIS basics with a focus on responsible visualization and interpretation.</div>
+          </li>
+          <li class="item">
+            <strong>Ethics & heritage case studies</strong>
+            <div class="meta">Debates, position papers, and community-centered perspectives on stewardship.</div>
+          </li>
+        </ul>
+      </div></div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="route" hidden>
+      <div class="panel"><div class="pad">
+        <h2 class="sectionTitle">Contact</h2>
+        <div class="twocol" style="margin-top: 12px;">
+          <div class="item">
+            <strong>Email</strong>
+            <div class="meta">Use an academic email or a professional address.</div>
+            <p class="muted" style="margin: 8px 0 0;">
+              <a href="mailto:contact@madelinestonesnyder.com">contact@madelinestonesnyder.com</a>
+            </p>
+          </div>
+          <div class="item">
+            <strong>Links</strong>
+            <ul class="muted" style="margin: 8px 0 0; padding-left: 18px;">
+              <li><a href="https://www.linkedin.com/in/madeline-stone-snyder-4b9b35180" target="_blank" rel="noreferrer">LinkedIn</a></li>
+              <li><a href="https://www.example.edu" target="_blank" rel="noreferrer">University profile</a></li>
+              <li><a href="https://osf.io/" target="_blank" rel="noreferrer">OSF / Open materials</a> (optional)</li>
+              <li><a href="https://orcid.org/0000-0003-2715-036X" target="_blank" rel="noreferrer">ORCID</a> (optional)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="item" style="margin-top: 14px;">
+          <strong>Media / permissions</strong>
+          <p class="muted" style="margin: 8px 0 0;">
+            If you use site photos featuring collaborators or community members, confirm permissions and
+            consider adding short captions and credits.
+          </p>
+        </div>
+      </div></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center;">
+        <div>© <span id="y"></span> Madeline Stone Snyder</div>
+        <div class="muted" style="font-size: 12.5px;">Hosted on GitHub Pages • Last updated: <span id="d"></span></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      const routes = Array.from(document.querySelectorAll('.route'));
+      const tabs = Array.from(document.querySelectorAll('.tab'));
+
+      function show(id){
+        routes.forEach(s => s.hidden = (s.id !== id));
+        tabs.forEach(t => {
+          const isCurrent = t.dataset.target === id;
+          t.setAttribute('aria-current', isCurrent ? 'page' : 'false');
+        });
+      }
+
+      function normalizeHash(){
+        const h = (location.hash || '#home').replace('#','').trim();
+        return routes.some(s => s.id === h) ? h : 'home';
+      }
+
+      tabs.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.target;
+          history.pushState(null, '', `#${id}`);
+          show(id);
+          // Move focus for accessibility
+          const main = document.getElementById('main');
+          if(main) main.focus();
+        });
+      });
+
+      window.addEventListener('hashchange', () => show(normalizeHash()));
+
+      // Init
+      show(normalizeHash());
+      document.getElementById('y').textContent = String(new Date().getFullYear());
+      document.getElementById('d').textContent = new Date().toLocaleDateString(undefined, { year:'numeric', month:'short', day:'2-digit' });
+    })();
+  </script>
+</body>
+</html>
